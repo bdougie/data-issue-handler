@@ -6704,6 +6704,9 @@ function getOpenIssues() {
 }
 
 function getRepoData(issues) {
+
+  console.log(issues)
+try {
   issues.forEach((data) => {
     const owner = data.data.repository.owner.login;
     const name = data.data.repository.name;
@@ -6712,6 +6715,10 @@ function getRepoData(issues) {
     }).catch((e) => console.log(e));
   });
   return [];
+  } catch (error) {
+    console.log('That did not go well.')
+    throw error
+  }
 }
 
 function storeData(record) {
