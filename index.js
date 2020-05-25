@@ -85,10 +85,9 @@ function getRepoData(issues) {
     const repoOwner = data.data.repository.owner.login;
     const repoName = data.data.repository.name;
     geIssues(body("OPEN")).then((r) => {
-      repoData.push({stars: r.data.repositorystargazers.totalCount}});
+      repoData.push({stars: r.data.repositorystargazers.totalCount});
     })
-  }
-  return repoData;
+  })
 }
 
 function storeData(record) {
