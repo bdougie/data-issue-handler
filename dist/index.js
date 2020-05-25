@@ -6673,7 +6673,7 @@ const statsQuery = (owner, name) =>
             totalCount
           }
         }
-      }  
+      }
     `,
   });
 
@@ -6711,7 +6711,7 @@ function getRepoData(issues) {
       repoData.push({ stars: r.data.repository.stargazers.totalCount });
     });
   });
-  return repoData;
+  return [];
 }
 
 function storeData(record) {
