@@ -6726,17 +6726,22 @@ function dumpData() {
 }
 
 async function run() {
-  var openIssues = await getOpenIssues();
-  var data = await getRepoData(openIssues);
+  try {
+    var openIssues = await getOpenIssues();
+    var data = await getRepoData(openIssues);
 
-  const now = moment().unix();
+    const now = moment().unix();
 
-  storeData({
-    timestamp: now,
-    goalsData: data,
-  });
+    storeData({
+      timestamp: now,
+      goalsData: data,
+    });
 
-  dumpData();
+    dumpData();
+  } catch (error) {
+    console.log('That did not go well.')
+    throw error
+  }
 }
 
 run();
