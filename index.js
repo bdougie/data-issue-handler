@@ -49,6 +49,20 @@ const body = state =>
               }
             }
           }
+        }
+      }
+    `
+  });
+
+const statsQuery = (owner, name) =>
+  JSON.stringify({
+    query: `
+      {
+        repository(owner: "${rowner}", name:"${name}") {
+          name
+          owner {
+            login
+          }
           stargazers {
             totalCount
           }
@@ -82,9 +96,9 @@ function getOpenIssues() {
 
 function getRepoData(issues) {
   issues.forEach((data) => {
-    const repoOwner = data.data.repository.owner.login;
-    const repoName = data.data.repository.name;
-    geIssues(body("OPEN")).then((r) => {
+    const owner = data.data.repository.owner.login;
+    const name = data.data.repository.name;
+    geIssues(statsQuery(owner, name)).then((r) => {
       repoData.push({stars: r.data.repositorystargazers.totalCount});
     })
   })
