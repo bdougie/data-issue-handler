@@ -103,7 +103,7 @@ function getRepoData(issues) {
     const name = data.data.repository.name;
     geIssues(statsQuery(owner, name)).then((r) => {
       repoData.push({ stars: r.data.repository.stargazers.totalCount });
-    });
+    }).catch((e) => console.log(e));
   });
   return [];
 }
