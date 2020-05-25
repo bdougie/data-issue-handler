@@ -6610,28 +6610,28 @@ const fetch = __webpack_require__(314);
 const moment = __webpack_require__(251);
 
 const dataDir = `./.github/actioncloud/issue-tracker`;
-if (!fs.existsSync(dataDir)){
+if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
-const dataFilePath = dataDir + '/data.json'
+const dataFilePath = dataDir + "/data.json";
 let issueData = [];
 let repoData = [];
-fs.readFile(dataFilePath, 'utf8', (err, data) => {
+fs.readFile(dataFilePath, "utf8", (err, data) => {
   if (!err) {
     var jsonObj = JSON.parse(data);
     if (typeof jsonObj === "object") {
-      issueData = jsonObj
+      issueData = jsonObj;
     }
   }
 });
 
-const githubToken = core.getInput('github-token');
+const githubToken = core.getInput("github-token");
 const repo = process.env.GITHUB_REPOSITORY;
 const repoInfo = repo.split("/");
 const repoOwner = repoInfo[0];
 const repoName = repoInfo[1];
 
-const body = state =>
+const body = (state) =>
   JSON.stringify({
     query: `
       {
@@ -6657,14 +6657,14 @@ const body = state =>
           }
         }
       }
-    `
+    `,
   });
 
 const statsQuery = (owner, name) =>
   JSON.stringify({
     query: `
       {
-        repository(owner: "${rowner}", name:"${name}") {
+        repository(owner: "${owner}", name:"${name}") {
           name
           owner {
             login
@@ -6674,7 +6674,7 @@ const statsQuery = (owner, name) =>
           }
         }
       }  
-    `
+    `,
   });
 
 function getIssues(body) {
@@ -6685,15 +6685,18 @@ function getIssues(body) {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      Authorization: `bearer ${githubToken}`
-    }
+      Authorization: `bearer ${githubToken}`,
+    },
   };
 
   return fetch(url, options)
-    .then(resp => resp.json())
-    .then(data => {
+    .then((resp) => resp.json())
+    .then((data) => {
       return data.data.repository.issues.edges;
-    }).catch((err) => {console.log(err)});
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function getOpenIssues() {
@@ -6705,9 +6708,9 @@ function getRepoData(issues) {
     const owner = data.data.repository.owner.login;
     const name = data.data.repository.name;
     geIssues(statsQuery(owner, name)).then((r) => {
-      repoData.push({stars: r.data.repository.stargazers.totalCount});
-    })
-  })
+      repoData.push({ stars: r.data.repository.stargazers.totalCount });
+    });
+  });
   return repoData;
 }
 
@@ -6737,6 +6740,7 @@ async function run() {
 }
 
 run();
+
 
 
 /***/ }),
