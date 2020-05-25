@@ -6694,6 +6694,7 @@ function getRepoData(issues) {
       repoData.push({stars: r.data.repositorystargazers.totalCount});
     })
   })
+  return repoData;
 }
 
 function storeData(record) {
@@ -6709,12 +6710,13 @@ function dumpData() {
 
 async function run() {
   var openIssues = await getOpenIssues();
-  var repoData = await getRepoData(openIssues);
+  var data = await getRepoData(openIssues);
+
   const now = moment().unix();
 
   storeData({
     timestamp: now,
-    goalsData: repoData,
+    goalsData: data,
   });
 
   dumpData();
