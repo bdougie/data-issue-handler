@@ -6705,7 +6705,7 @@ function getRepoData(issues) {
     const owner = data.data.repository.owner.login;
     const name = data.data.repository.name;
     geIssues(statsQuery(owner, name)).then((r) => {
-      repoData.push({stars: r.data.repositorystargazers.totalCount});
+      repoData.push({stars: r.data.repository.stargazers.totalCount});
     })
   })
   return repoData;
